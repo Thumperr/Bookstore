@@ -65,3 +65,4 @@
 /Users/maxrubert/Desktop/Information Systems/Winter 2025/IS 413/Homework/Bookstore/backend/Bookstore.API/obj/Debug/net8.0/Bookstore.API.pdb
 /Users/maxrubert/Desktop/Information Systems/Winter 2025/IS 413/Homework/Bookstore/backend/Bookstore.API/obj/Debug/net8.0/Bookstore.API.genruntimeconfig.cache
 /Users/maxrubert/Desktop/Information Systems/Winter 2025/IS 413/Homework/Bookstore/backend/Bookstore.API/obj/Debug/net8.0/ref/Bookstore.API.dll
+/Users/maxrubert/Desktop/Information Systems/Winter 2025/IS 413/Homework/Bookstore/backend/Bookstore.API/obj/Debug/net8.0/Bookstore.API.sourcelink.json

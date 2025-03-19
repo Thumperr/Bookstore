@@ -14,8 +14,54 @@ public class BookstoreController : ControllerBase
         _bookstoreContext = bookstoreContext;
     }
 
-    public IEnumerable<Book> GetBooks()
+    /*public IActionResult GetBooks(int pageSize = 5, int pageNum = 1)
     {
-        return _bookstoreContext.Books.ToList();
+        var something = _bookstoreContext.Books
+            .Skip((pageNum - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+        var totalNumBooks = _bookstoreContext.Books.Count();
+
+        var someObject = new
+        {
+            Books = something,
+            TotalNumBooks = totalNumBooks
+        };
+        
+        return Ok(someObject);
+    }*/
+    
+    public IActionResult GetBooks(int pageSize = 5, int pageNum = 1, string? sortOrder = null)
+    {
+        var booksQuery = _bookstoreContext.Books.AsQueryable();
+
+        // Only apply sorting if sortOrder is provided
+        if (!string.IsNullOrEmpty(sortOrder))
+        {
+            if (sortOrder.ToLower() == "desc")
+            {
+                booksQuery = booksQuery.OrderByDescending(b => b.Title);
+            }
+            else if (sortOrder.ToLower() == "asc")
+            {
+                booksQuery = booksQuery.OrderBy(b => b.Title);
+            }
+        }
+
+        var paginatedBooks = booksQuery
+            .Skip((pageNum - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+        var totalNumBooks = _bookstoreContext.Books.Count();
+
+        var response = new
+        {
+            Books = paginatedBooks,
+            TotalNumBooks = totalNumBooks
+        };
+
+        return Ok(response);
     }
 }
