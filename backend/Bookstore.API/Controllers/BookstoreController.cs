@@ -32,7 +32,8 @@ public class BookstoreController : ControllerBase
         return Ok(someObject);
     }*/
     
-    public IActionResult GetBooks(int pageSize = 5, int pageNum = 1, string? sortOrder = null)
+    [HttpGet("AllBooks")]
+    public IActionResult GetBooks(int pageSize = 5, int pageNum = 1, string? sortOrder = null, [FromQuery] List<string>? bookCategories = null)
     {
         var booksQuery = _bookstoreContext.Books.AsQueryable();
 
@@ -48,13 +49,18 @@ public class BookstoreController : ControllerBase
                 booksQuery = booksQuery.OrderBy(b => b.Title);
             }
         }
+        
+        if (bookCategories != null && bookCategories.Any())
+        {
+            booksQuery = booksQuery.Where(b => bookCategories.Contains(b.Category));
+        }
+        
+        var totalNumBooks = booksQuery.Count();
 
         var paginatedBooks = booksQuery
             .Skip((pageNum - 1) * pageSize)
             .Take(pageSize)
             .ToList();
-
-        var totalNumBooks = _bookstoreContext.Books.Count();
 
         var response = new
         {
@@ -63,5 +69,16 @@ public class BookstoreController : ControllerBase
         };
 
         return Ok(response);
+    }
+    
+    [HttpGet("GetBookCategories")]
+    public IActionResult GetBookCategories()
+    {
+        var bookCategories = _bookstoreContext.Books
+            .Select(b => b.Category)
+            .Distinct()
+            .ToList();
+        
+        return Ok(bookCategories);
     }
 }
