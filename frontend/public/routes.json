@@ -5,5 +5,10 @@
       "serve": "/index.html",
       "statusCode": 200
     }
-  ]
+  ],
+  "globalHeaders": {
+    "Access-Control-Allow-Origin": "https://nice-coast-02a5f191e.6.azurestaticapps.net",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization"
+  }
 }
