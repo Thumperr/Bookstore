@@ -17,7 +17,7 @@ builder.Services.AddCors(options => {
     options.AddPolicy("AllowFrontend", 
         policy =>
         {
-            policy.AllowAnyOrigin()
+            policy.WithOrigins("http://localhost:3001", "https://nice-coast-02a5f191e.6.azurestaticapps.net")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
